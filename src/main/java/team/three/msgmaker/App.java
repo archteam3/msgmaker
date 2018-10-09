@@ -3,8 +3,8 @@ package team.three.msgmaker;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import team.three.msgmaker.producer.IProducer;
 import team.three.msgmaker.producer.ProducerFactory;
+import team.three.msgmaker.task.TaskManager;
 
 
 public class App 
@@ -19,8 +19,10 @@ public class App
     	conf.setConfig(args);
     	
     	ProducerFactory.initialize();
-    	IProducer pr = ProducerFactory.get();
-    	System.out.println(pr);
+
+    	TaskManager tm = new TaskManager();
+    	tm.start();
+    	tm.join();
     	ProducerFactory.release();
     }
 }

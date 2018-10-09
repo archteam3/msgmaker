@@ -8,33 +8,35 @@ import team.three.msgmaker.Message;
 import team.three.msgmaker.producer.IProducer;
 
 public class ThreadWorker extends Thread {
-	
+	private int wkrId;
 	private int shortMsgCnt;
 	private int longMsgCnt;
 	private long interval;
 	private List<Equipment> eqps;
 	private Object lock;
 	private int maxCnt;
+	private boolean isRun;
 	
 	private int longMsgThreshold;
 	private IProducer producer;
 	
-	public ThreadWorker(int startIdx, int endIdx, IProducer producer) {
-		shortMsgCnt = 0;
-		longMsgCnt = 0;
+	public ThreadWorker(int wkrId, int startIdx, int endIdx, IProducer producer) {
+		this.wkrId = wkrId;
+		this.shortMsgCnt = 0;
+		this.longMsgCnt = 0;
 		
 		Config cfg = Config.get();
-		interval = cfg.getSi();
+		this.interval = cfg.getSi();
 		
-		longMsgThreshold = (int)(cfg.getLi() / cfg.getSi() );
+		this.longMsgThreshold = (int)(cfg.getLi() / cfg.getSi() );
 		
-		eqps = new ArrayList<>(endIdx - startIdx + 1);
+		this.eqps = new ArrayList<>(endIdx - startIdx + 1);
 		for( int i=startIdx; i<= endIdx; i++) {
-			eqps.add(new Equipment(i));
+			this.eqps.add(new Equipment(i));
 		}
 		
-		lock = new Object();
-		maxCnt = cfg.getMsgCnt();
+		this.lock = new Object();
+		this.maxCnt = cfg.getMsgCnt();
 		this.producer = producer;
 	}
 	
@@ -50,9 +52,19 @@ public class ThreadWorker extends Thread {
 		}
 	}
 	
+	public boolean isRun() {
+		return isRun;
+	}
+	
 	public void run() {
-		boolean isRun = true;
+		isRun = true;
 		boolean isOver = true;
+		try {
+			producer.initialize();
+		} catch ( Exception e ) {
+			e.printStackTrace();
+			return;
+		}
 		Message msgMaker = Message.get();
 		int si = 0;
 		int li = 0;
@@ -118,6 +130,13 @@ public class ThreadWorker extends Thread {
 			if( isOver ) {
 				isRun = false;
 			}
+		}
+		
+		try {
+			producer.finalize();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
