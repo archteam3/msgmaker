@@ -2,6 +2,8 @@ package team.three.msgmaker.producer;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ShutdownListener;
+import com.rabbitmq.client.ShutdownSignalException;
 
 import team.three.msgmaker.Config;
 import team.three.msgmaker.Const;
@@ -18,6 +20,16 @@ public class ProducerRabbitMQ implements IProducer {
 		channel = con.createChannel();
 		ex = cfg.getIndiv().get("exchange_name");
 		channel.exchangeDeclare(ex, "topic");
+		/*
+		channel.addShutdownListener(new ShutdownListener() {
+			
+			@Override
+			public void shutdownCompleted(ShutdownSignalException cause) {
+				// TODO Auto-generated method stub
+				cause.printStackTrace();
+			}
+		});
+		*/
 	}
 
 	@Override

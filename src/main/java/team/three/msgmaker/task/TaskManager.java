@@ -49,11 +49,13 @@ public class TaskManager extends Thread{
 			wkr.start();
 		}
 		
-		boolean isRun = false;
+		boolean isRun = true;
 		int totalLongMsgCnt = 0;
 		int totalShortMsgCnt = 0;
-		while(!isRun) {
+		while(isRun) {
 			isRun = false;
+			totalShortMsgCnt = 0;
+			totalLongMsgCnt = 0;
 			for( ThreadWorker wkr : wkrs ) {
 				totalShortMsgCnt += wkr.getShortCnt();
 				totalLongMsgCnt += wkr.getLongCnt();
@@ -65,14 +67,13 @@ public class TaskManager extends Thread{
 					" ShortMsg:"+ StringUtils.leftPad(Integer.toString(totalShortMsgCnt), 12) +
 					" LongMsg:"+ StringUtils.leftPad(Integer.toString(totalLongMsgCnt), 12)
 					);
-			
-			try {
-				Thread.sleep(10000);
-			} catch( Exception e) {
-				e.printStackTrace();
+			if( isRun ) {
+				try {
+					Thread.sleep(10000);
+				} catch( Exception e) {
+					e.printStackTrace();
+				}
 			}
-			
-			System.out.println();
 		}
 		
 		System.out.println("========== END ====== test time : " + ((System.currentTimeMillis() - startTm)/1000) + " s");

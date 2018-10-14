@@ -38,6 +38,7 @@ public class ThreadWorker extends Thread {
 		this.lock = new Object();
 		this.maxCnt = cfg.getMsgCnt();
 		this.producer = producer;
+		this.isRun = true;
 	}
 	
 	public int getShortCnt() {
@@ -57,7 +58,6 @@ public class ThreadWorker extends Thread {
 	}
 	
 	public void run() {
-		isRun = true;
 		boolean isOver = true;
 		try {
 			producer.initialize();
@@ -89,6 +89,8 @@ public class ThreadWorker extends Thread {
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					System.out.println(eqp.getEqpId() + " : " + eqp.getCurrMsgIdx());
+					return;
 				}
 			}
 			
