@@ -22,8 +22,8 @@ public class TaskManager extends Thread{
 		int eidx = cfg.getEdIdx();
 		int tpe = Integer.parseInt(cfg.getGlobal().get("eqp_cnt_per_thread"));
 		
-		int thdCnt = (eidx - sidx) / tpe;
-		int remain = (eidx - sidx) % tpe;
+		int thdCnt = (eidx - sidx + 1) / tpe;
+		int remain = (eidx - sidx + 1) % tpe;
 		if( remain != 0 )
 			thdCnt =+ 1;
 		
