@@ -1,5 +1,7 @@
 package team.three.msgmaker.producer;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -16,7 +18,14 @@ public class ProducerKafka implements IProducer {
 		// TODO Auto-generated method stub
 		Config cfg = Config.get();
 		Properties props = new Properties();
-		props.put("bootstrap.servers", Config.get().getIndiv().get("server_ip"));
+		
+		Map<String, String> cMap = cfg.getIndiv();
+		Iterator<String> keys = cMap.keySet().iterator();
+		while( keys.hasNext() ) {
+			String key = keys.next();
+			props.put(key, cMap.get(key));
+		}
+		
 		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer", "org.apache.kafka.common.serialization.ByteArrayDeserializer");
 		
