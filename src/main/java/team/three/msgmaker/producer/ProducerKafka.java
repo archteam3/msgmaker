@@ -27,7 +27,7 @@ public class ProducerKafka implements IProducer {
 		}
 		
 		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-		props.put("value.serializer", "org.apache.kafka.common.serialization.ByteArrayDeserializer");
+		props.put("value.serializer", "org.apache.kafka.common.serialization.ByteArraySerializer");
 		
 		producer = new KafkaProducer<>(props);
 	}
