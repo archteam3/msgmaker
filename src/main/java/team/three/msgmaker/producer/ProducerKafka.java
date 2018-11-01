@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
 import team.three.msgmaker.Config;
 
@@ -35,7 +36,7 @@ public class ProducerKafka implements IProducer {
 	@Override
 	public void send(String topic, String msg) throws Exception  {
 		// TODO Auto-generated method stub
-		producer.send(new ProducerRecord<String, byte[]>(topic, msg.getBytes()));
+		RecordMetadata res = producer.send(new ProducerRecord<String, byte[]>(topic, msg.getBytes())).get();
 	}
 
 	@Override
