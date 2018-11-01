@@ -93,7 +93,7 @@ public class ThreadWorker extends Thread {
 					return;
 				}
 			}
-			
+			/*
 			for( Equipment eqp : eqps ) {
 				if( eqp.getCurrMsgIdx() > maxCnt) {
 					continue;
@@ -113,6 +113,7 @@ public class ThreadWorker extends Thread {
 					}
 				}
 			}
+			*/
 			
 			synchronized (lock) {
 				this.shortMsgCnt += si;
