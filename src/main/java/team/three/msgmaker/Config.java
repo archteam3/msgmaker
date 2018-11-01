@@ -28,7 +28,7 @@ public class Config {
 			"  -mc : message count default 10000\n" +
 			"  -cf : config file default ./msgmaker.conf\n" + 
 			"  -si : short message interval (ms) default 50ms\n" +
-			"  -li : long message interval (ms) default 10000ms = 10s\n" +
+			"  -li : long message interval (ms) default 10000000ms = 10000s\n" +
 			"  -ss : short message size (byte) default 500byte\n" +
 			"  -ls : long message size (kbyte) default 3072kbyte"
 			;
@@ -57,7 +57,7 @@ public class Config {
 		stIdx = 0;
 		edIdx = 0;
 		si = 50;
-		li = 10000;
+		li = 10000000;
 		ss = 500;
 		ls = 1024 * 3 * 1024;
 		msgCnt = 10000;
